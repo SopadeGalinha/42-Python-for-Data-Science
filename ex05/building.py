@@ -22,6 +22,15 @@ def print_error(message):
 
 
 def main():
+    """
+    Main function that reads/receives a string and counts the number of
+    upper-case, lower-case, punctuation, digit and space characters
+    in the string. It then displays the sums of each category.
+    - If no arguments are provided, it prompts the user to enter a string.
+    - If one argument is provided, it uses that as the string.
+    - If more than one argument is provided, it displays an error message.
+    - If any error occurs, it displays an error message.
+    """
     try:
         if len(sys.argv) == 1:
             print("What is the text to count?")
