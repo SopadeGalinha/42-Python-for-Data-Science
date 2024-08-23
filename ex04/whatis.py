@@ -48,32 +48,19 @@ def main():
     If validation fails, it calls `print_error`
     to display an error message and exit.
     """
-    if len(sys.argv) != 2:
-        error_message = "You must provide an argument" \
-            if len(sys.argv) < 2 \
-            else "More than one argument provided"
-        print_error(error_message)
+    if len(sys.argv) < 2:
+        return
+    assert len(sys.argv) == 2, "more than one argument is provided"
     try:
         n = int(sys.argv[1])
     except ValueError:
-        print_error("Argument is not an integer")
+        raise AssertionError("argument is not an integer")
+
     is_even_or_odd(n)
-
-    # Print the docstring of the main function
-    # print(f"Docstring of 'main':\n{main.__doc__}")
-
-    # Print the docstring of the 'is_even_or_odd' function
-    # print(f"Docstring of 'is_even_or_odd':\n{is_even_or_odd.__doc__}")
-
-    # Print the docstring of the 'Colors' class
-    # print(f"Docstring of 'Colors':\n{Colors.__doc__}")
-
-    # Print the docstring of the 'print_error' function
-    # print(f"Docstring of 'print_error':\n{print_error.__doc__}")
-
-    # Print the docstring of the 'Colors' class
-    print(f"Docstring of 'Colors':\n{Colors.__doc__}")
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except AssertionError as e:
+        print_error(str(e))

@@ -17,7 +17,7 @@ def print_error(message):
         The program exits with status code 1 after printing the error message.
     """
     print(
-        f"{Colors.BOLD}Error: "
+        f"{Colors.BOLD}Error:"
         f"{Colors.RED} {message}{Colors.RESET}",
         file=sys.stderr
     )
@@ -35,23 +35,22 @@ def main():
     - If any error occurs, it displays an error message.
     """
     try:
-        if len(sys.argv) == 1:
+        assert (not len(sys.argv) > 2), "more than one argument is provided"
+        if len(sys.argv) == 1 or sys.argv[1] is None:
             print("What is the text to count?")
             string = input()
-        elif len(sys.argv) == 2:
-            string = sys.argv[1]
         else:
-            print_error("You must provide one or zero arguments")
-        if not string:
-            print_error("You must provide a valid argument")
-    except EOFError:
-        print_error("Failed to read input")
+            string = sys.argv[1]
+    except (AssertionError, EOFError) as e:
+        if isinstance(e, EOFError):
+            e = "EOFError occurred"
+        raise AssertionError(str(e))
 
     upper = 0
     lower = 0
-    punctuation = 0
     digits = 0
     spaces = 0
+    punctuation = 0
 
     for char in string:
         if char.isupper():
@@ -64,7 +63,6 @@ def main():
             spaces += 1
         else:
             punctuation += 1
-
     print(
         f"The text contains {len(string)} characters:\n"
         f"{upper} upper letters\n"
@@ -76,4 +74,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except AssertionError as e:
+        print_error(str(e))
