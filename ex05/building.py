@@ -16,8 +16,11 @@ def print_error(message):
     Exits:
         The program exits with status code 1 after printing the error message.
     """
-    print(f"{Colors.BOLD}Error: {Colors.RED}\
-          {message}{Colors.RESET}", file=sys.stderr)
+    print(
+        f"{Colors.BOLD}Error: "
+        f"{Colors.RED} {message}{Colors.RESET}",
+        file=sys.stderr
+    )
     sys.exit(1)
 
 
