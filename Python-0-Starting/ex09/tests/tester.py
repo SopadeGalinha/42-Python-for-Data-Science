@@ -1,13 +1,14 @@
 # tests/tester.py
-from ft_package import *
+from ft_package import count_in_list, ft_tqdm
+import time
+
 
 def test_count_in_list():
     assert count_in_list(["toto", "tata", "toto"], "toto") == 2
     assert count_in_list(["toto", "tata", "toto"], "tutu") == 0
 
+
 def test_ft_tqdm():
-    from ft_package import ft_tqdm
-    import time
     for _ in ft_tqdm(range(10)):
         time.sleep(0.1)
 

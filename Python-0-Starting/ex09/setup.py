@@ -1,5 +1,5 @@
-# setup.py
 from setuptools import setup, find_packages
+
 
 setup(
     name='ft_package',
@@ -7,8 +7,8 @@ setup(
     description='A sample test package',
     author='jhogonca',
     author_email='jhogonca@student.42porto.com',
-    url='https://github.com/SopadeGalinha/'+
-		'42-Python-for-Data-Science/tree/main/ex09/ft_package',
+    url='https://github.com/SopadeGalinha/' +
+        '42-Python-for-Data-Science/tree/main/ex09/ft_package',
     packages=find_packages(),
     classifiers=[
         'Programming Language :: Python :: 3',

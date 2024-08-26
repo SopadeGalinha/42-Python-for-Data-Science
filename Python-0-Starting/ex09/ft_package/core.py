@@ -6,6 +6,7 @@ def count_in_list(lst, item):
     """ Counts the number of occurrences of an item in a list. """
     return lst.count(item)
 
+
 def format_time(seconds: float) -> str:
     """Formats time in H:M:S."""
     return time.strftime("%H:%M:%S", time.gmtime(seconds))
