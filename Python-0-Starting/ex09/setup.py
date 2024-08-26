@@ -7,7 +7,8 @@ setup(
     description='A sample test package',
     author='jhogonca',
     author_email='jhogonca@student.42porto.com',
-    url='https://github.com/sopadegalinha/',
+    url='https://github.com/SopadeGalinha/'+
+		'42-Python-for-Data-Science/tree/main/ex09/ft_package',
     packages=find_packages(),
     classifiers=[
         'Programming Language :: Python :: 3',
