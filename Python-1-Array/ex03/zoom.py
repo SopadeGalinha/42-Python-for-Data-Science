@@ -29,6 +29,31 @@ def ft_mean(img, axis):
     return grayscale_img.astype(np.uint8)
 
 
+def print_rows(arr):
+    count = 0
+    for row in arr:
+        count += 1
+    length = count
+    count = 0
+    for row in arr:
+        if count == 0:
+            print("[[[", row[0], "]", sep="")
+        if count > 0 and count < 3 or count > length - 4:
+            if int == 1:
+                if count == length - 1:
+                    print("  [", row[0], "]]]", sep="")
+                elif count < length - 1:
+                    print("  [", row[0], "]", sep="")
+            else:
+                if count == length - 1:
+                    print("  ", row[0], "]]", sep="")
+                else:
+                    print("  ", row[0], sep="")
+        if count == 2:
+            print("  ...")
+        count += 1
+
+
 def main():
     """
     Load, process, and display an image based on command-line arguments.
@@ -40,18 +65,29 @@ def main():
     to file format and existence are caught and displayed.
     """
     try:
+        if len(sys.argv) != 2:
+            raise AssertionError("Usage: python zoom.py <image_path>")
         path = sys.argv[1]
         if not os.path.exists(path):
             raise AssertionError("File not found.")
         if not path.lower().endswith((".jpg", ".jpeg")):
             raise AssertionError("Unsupported image format.")
         img = ft_load(path)
-        # img_gray = ft_mean(img, 2)
-        img_gray = np.mean(img, axis=2).astype(np.uint8)
+        if len(img.shape) != 3 or img.shape[2] != 3:
+            raise AssertionError(
+                "The image is not in the expected format (HxWx3).")
+        print(f"The shape of Image is "
+              f"{img.shape[0]}x{img.shape[1]}x{img.shape[2]}")
+        print(img)
+        print(ft_load(path))
+        img_gray = ft_mean(img, axis=2)
+        # np.mean(img, axis=2).astype(np.uint8)
         img_zoom = Image.fromarray(img_gray).crop((400, 100, 800, 500))
-        img_zoom.save("zoomed_image.jpg")
         plt.imshow(img_zoom, cmap="gray")
         plt.axis("off")
+        print(f"New shape after slicing: {img_zoom.size}")
+        print_rows(np.array(img_zoom))
+        img_zoom.save("zoomed_image.jpg")
         plt.show()
     except AssertionError as e:
         print(f"Error: {e}")
