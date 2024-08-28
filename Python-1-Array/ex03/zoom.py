@@ -30,6 +30,15 @@ def ft_mean(img, axis):
 
 
 def print_rows(arr):
+    """
+    Prints the rows of a given array.
+
+    Parameters:
+    arr (list): The input array.
+
+    Returns:
+    None
+    """
     count = 0
     for row in arr:
         count += 1
@@ -76,18 +85,18 @@ def main():
         if len(img.shape) != 3 or img.shape[2] != 3:
             raise AssertionError(
                 "The image is not in the expected format (HxWx3).")
-        print(f"The shape of Image is "
-              f"{img.shape[0]}x{img.shape[1]}x{img.shape[2]}")
+        print(
+            f"The shape of Image is "
+            f"{img.shape[0]}x{img.shape[1]}x{img.shape[2]}")
         print(img)
         print(ft_load(path))
         img_gray = ft_mean(img, axis=2)
         # np.mean(img, axis=2).astype(np.uint8)
         img_zoom = Image.fromarray(img_gray).crop((400, 100, 800, 500))
         plt.imshow(img_zoom, cmap="gray")
-        plt.axis("off")
+        # plt.axis("off")
         print(f"New shape after slicing: {img_zoom.size}")
         print_rows(np.array(img_zoom))
-        img_zoom.save("zoomed_image.jpg")
         plt.show()
     except AssertionError as e:
         print(f"Error: {e}")
