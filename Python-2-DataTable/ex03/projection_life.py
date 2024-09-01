@@ -10,7 +10,7 @@ def main():
 
         # Load the life expectancy data for the year 1900
         life_expectancy_data = [load("life_expectancy_years.csv")['1900']]
-        
+
         plt.figure(figsize=(10, 6))
         # plt.plot(gdp_data, life_expectancy_data, 'o')
         plt.scatter(gdp_data, life_expectancy_data)
@@ -28,5 +28,7 @@ def main():
         print(f"ValueError: {e}")
     except Exception as e:
         print(f"Exception: {e}")
+
+
 if __name__ == "__main__":
     main()

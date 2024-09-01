@@ -75,7 +75,8 @@ def main():
     try:
         data = load("population_total.csv")
         countries = ["Brazil", "Portugal", "France",
-                    "Hungary", "Italy", "Spain", "Germany", "United States", "China"]
+                     "Hungary", "Italy", "Spain",
+                     "Germany", "United States", "China"]
         plot_population_for_countries(data, countries)
     except AssertionError as e:
         print(f"AssertionError: {e}")
