@@ -1,7 +1,5 @@
 from matplotlib import pyplot as plt
 from load_csv import load
-import sys
-import os
 
 
 def main():
@@ -19,17 +17,10 @@ def main():
         Exception: If any other exception occurs.
     """
     try:
-        if len(sys.argv) != 2:
-            raise ValueError('Please provide a CSV file as input')
-        if not sys.argv[1].endswith('.csv'):
-            raise ValueError('Please provide a CSV file as input')
-        if not os.path.exists(sys.argv[1]):
-            raise ValueError('Provided file does not exist')
-
-        country_name = 'Brazil'
+        country_name = 'Portugal'
 
         # - Loads the dataset
-        dataset = load(sys.argv[1])
+        dataset = load("life_expectancy_years.csv")
 
         # - Filters the dataset to only include data for the given country
         country_data = dataset[dataset['country'] == country_name]
