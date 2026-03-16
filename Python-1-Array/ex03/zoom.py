@@ -1,106 +1,75 @@
 from load_image import ft_load
 import matplotlib.pyplot as plt
-from PIL import Image
 import numpy as np
-import sys
 import os
 
 
 def ft_mean(img, axis):
     """
-    Compute the mean of a 3D array along a specified axis.
-    Parameters:
-    img (ndarray): The input 3D array.
-    axis (int): The axis along which to compute the mean. Must be 2.
+    Convert RGB image to grayscale by computing mean of color channels.
+
+    Args:
+        img (ndarray): The input RGB image array with shape (height, width, 3).
+        axis (int): The axis along which to compute the mean. Must be 2.
+
     Returns:
-    ndarray: The grayscale image obtained by
-        computing the mean along the specified axis.
+        ndarray: The grayscale image (2D array).
+
     Raises:
-    ValueError: If the input is not a 3D array or the axis is not 2.
+        ValueError: If the input is not a 3D array or axis is not 2.
     """
-    # Validate that the input is a 3D array and axis is 2
     if len(img.shape) != 3 or axis != 2:
         raise ValueError("Input must be a 3D array, and axis must be 2.")
 
-    # Compute the mean across the specified axis (axis=2 for color channels)
-    grayscale_img = np.sum(img, axis=axis) / img.shape[axis]
+    height, width, channels = img.shape
+    grayscale_img = np.zeros((height, width), dtype=np.uint8)
 
-    # Convert the result to uint8 (standard image format)
-    return grayscale_img.astype(np.uint8)
+    for i in range(height):
+        for j in range(width):
+            # Calculate mean of RGB values
+            r, g, b = img[i, j]
+            grayscale_img[i, j] = (int(r) + int(g) + int(b)) // 3
 
-
-def print_rows(arr):
-    """
-    Prints the rows of a given array.
-
-    Parameters:
-    arr (list): The input array.
-
-    Returns:
-    None
-    """
-    count = 0
-    for row in arr:
-        count += 1
-    length = count
-    count = 0
-    for row in arr:
-        if count == 0:
-            print("[[[", row[0], "]", sep="")
-        if count > 0 and count < 3 or count > length - 4:
-            if int == 1:
-                if count == length - 1:
-                    print("  [", row[0], "]]]", sep="")
-                elif count < length - 1:
-                    print("  [", row[0], "]", sep="")
-            else:
-                if count == length - 1:
-                    print("  ", row[0], "]]", sep="")
-                else:
-                    print("  ", row[0], sep="")
-        if count == 2:
-            print("  ...")
-        count += 1
+    return grayscale_img
 
 
 def main():
     """
-    Load, process, and display an image based on command-line arguments.
+    Load, process, and display an image with zoom functionality.
 
-    This function serves as the main entry point of the script. It loads an
-    image from the command-line argument, performs various image processing
-    operations, and displays the resulting images. The script supports
-    cropping, grayscale conversion, and zoomed image display. Errors related
-    to file format and existence are caught and displayed.
+    Loads "animal.jpeg", prints shape and pixel data, crops to zoom region,
+    converts to grayscale, and displays with axis scales.
     """
+    filename = "animal.jpeg"
+
+    if not os.path.exists(filename):
+        print(f"Error: File '{filename}' not found.")
+        return
+
     try:
-        if len(sys.argv) != 2:
-            raise AssertionError("Usage: python zoom.py <image_path>")
-        path = sys.argv[1]
-        if not os.path.exists(path):
-            raise AssertionError("File not found.")
-        if not path.lower().endswith((".jpg", ".jpeg")):
-            raise AssertionError("Unsupported image format.")
-        img = ft_load(path)
-        if len(img.shape) != 3 or img.shape[2] != 3:
-            raise AssertionError(
-                "The image is not in the expected format (HxWx3).")
-        print(
-            f"The shape of Image is "
-            f"{img.shape[0]}x{img.shape[1]}x{img.shape[2]}")
+        img = ft_load(filename)
+
+        print(f"The shape of image is: {img.shape}")
         print(img)
-        print(ft_load(path))
+
+        # Convert to grayscale and crop
         img_gray = ft_mean(img, axis=2)
-        # np.mean(img, axis=2).astype(np.uint8)
-        img_zoom = Image.fromarray(img_gray).crop((400, 100, 800, 500))
+        img_zoom = img_gray[100:500, 400:800]
+
+        # Add dimension to match expected output format (400, 400, 1)
+        img_zoom_3d = np.expand_dims(img_zoom, axis=2)
+
+        print(f"New shape after slicing: {img_zoom_3d.shape}")
+        print(img_zoom_3d)
+
+        # Display the zoomed image with axes
         plt.imshow(img_zoom, cmap="gray")
-        # plt.axis("off")
-        print(f"New shape after slicing: {img_zoom.size}")
-        print_rows(np.array(img_zoom))
         plt.show()
-    except AssertionError as e:
+
+    except ValueError as e:
         print(f"Error: {e}")
-        return ""
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 if __name__ == "__main__":

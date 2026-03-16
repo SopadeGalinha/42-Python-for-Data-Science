@@ -2,6 +2,7 @@ from array2D import slice_me
 
 
 def tester():
+    """Demonstrate the slice_me helper by printing example slices."""
     family = [[1.80, 78.4],
               [2.15, 102.7],
               [2.10, 98.5],

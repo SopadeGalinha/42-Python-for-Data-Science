@@ -2,6 +2,11 @@ from give_bmi import give_bmi, apply_limit
 
 
 def main():
+    """Run a BMI calculation example and print results.
+
+    This function is intended as a simple demonstration of the
+    `give_bmi` and `apply_limit` helpers.
+    """
     height = [2.71, 1.15]
     weight = [165.3, 38.4]
     bmi = give_bmi(height, weight)

@@ -19,11 +19,9 @@ def ft_load(path: str) -> np.array:
             raise AssertionError("File not found.")
         if not path.lower().endswith((".jpg", ".jpeg")):
             raise AssertionError("Unsupported image format.")
-        img = Image.open(path)
-        print(
-            f"The shape of Image is: {img.size[1]},{img.size[0]}, {img.layers}"
-            )
-        return np.array(img)
+        img = np.array(Image.open(path))
+        print(f"The shape of image is: {img.shape}")
+        return img
     except AssertionError as e:
         print(f"Error: {e}")
         return ""
